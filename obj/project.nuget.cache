@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OhW03xDPaJM=",
+  "dgSpecHash": "IsJ/gwyAmds=",
   "success": true,
-  "projectFilePath": "C:\\PhoneBook_WebAPI\\PhoneBook_webAPI\\PhoneBook_webAPI\\PhoneBook_webAPI.csproj",
+  "projectFilePath": "C:\\PhoneBook_WebAPI\\PhoneBook_WebAPI\\PhoneBook_webAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\khrystyna.vey\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\khrystyna.vey\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

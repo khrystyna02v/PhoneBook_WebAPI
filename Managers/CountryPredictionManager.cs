@@ -1,7 +1,4 @@
-﻿using PhoneBook_webAPI.ExternalProviders;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace PhoneBook_webAPI.Managers
+﻿namespace PhoneBook_webAPI.Managers
 {
     public class CountryPredictionManager(INationalizeProvider nationalizeProvider, IApiFirstProvider apiFirstProvider) : ICountryPredictionManager
     {

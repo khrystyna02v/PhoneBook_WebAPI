@@ -4,14 +4,22 @@ namespace PhoneBook_webAPI.ExternalProviders
 {
     public class ApiFirstProvider: IApiFirstProvider
     {
-        private HttpClient httpClient = new()
+        private readonly IConfiguration _configuration;
+        private readonly HttpClient _httpClient;
+
+        public ApiFirstProvider(IConfiguration configuration)
         {
-            BaseAddress = new Uri("https://api.first.org/data/v1/countries"),
-        };
+            _configuration = configuration;
+            var url = _configuration.GetValue<string>("Apis:ApiFirstUrl");
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(url)
+            };
+        }
 
         public async Task<Dictionary<string, CountryInfo>> ReadCountries()
         {
-            using var response = await httpClient.GetAsync("?limit=300&pretty=true");
+            using var response = await _httpClient.GetAsync("?limit=300&pretty=true");
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
 
