@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IManager, JsonManager>();
 builder.Services.AddScoped<INationalizeProvider, NationalizeProvider>();
 builder.Services.AddScoped<IApiFirstProvider, ApiFirstProvider>();
+builder.Services.AddScoped<IRestCountriesProvider, RestCountriesProvider>();
 builder.Services.AddScoped<ICountryPredictionManager, CountryPredictionManager>();
 
 var app = builder.Build();

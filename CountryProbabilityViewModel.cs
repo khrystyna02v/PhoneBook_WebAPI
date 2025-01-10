@@ -13,11 +13,15 @@ namespace PhoneBook_webAPI
         [JsonPropertyName("country_name")]
         public string? CountryName { get; set; }
 
-        public CountryProbabilityViewModel(CountryProbability countryProbability, string? countryName = null)
+        [JsonPropertyName("capital")]
+        public string? Capital { get; set; }
+
+        public CountryProbabilityViewModel(CountryProbability countryProbability, string? countryName, string capital)
         {
             CountryId = countryProbability.CountryId;
             Probability = countryProbability.Probability;
             CountryName = countryName;
+            Capital = capital;
         }
     }
 }
