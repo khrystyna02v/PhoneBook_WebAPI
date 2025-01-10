@@ -1,0 +1,149 @@
+[
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.CountryPredictionController",
+    "Method": "Predict",
+    "RelativePath": "api/CountryPrediction/pedict-country",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "number",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "Beginning",
+    "RelativePath": "api/PhoneBook/beginning",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "beginning",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "Create",
+    "RelativePath": "api/PhoneBook/create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "personVM",
+        "Type": "PhoneBook_webAPI.PersonViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "Delete",
+    "RelativePath": "api/PhoneBook/deleting",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "surname",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "Details",
+    "RelativePath": "api/PhoneBook/details",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "surname",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "Edit",
+    "RelativePath": "api/PhoneBook/edit",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "surname",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "personVM",
+        "Type": "PhoneBook_webAPI.PersonViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "List",
+    "RelativePath": "api/PhoneBook/list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PhoneBook_webAPI.Controllers.PhoneBookController",
+    "Method": "List",
+    "RelativePath": "api/PhoneBook/part-of-list",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "skip",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "take",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

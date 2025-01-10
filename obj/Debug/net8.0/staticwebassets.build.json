@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "GN7lP/pnvRv2Q3RJPwAE5FsLJjZZQs/xRzVlJ+hcTVs=",
+  "Source": "PhoneBook_webAPI",
+  "BasePath": "_content/PhoneBook_webAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
