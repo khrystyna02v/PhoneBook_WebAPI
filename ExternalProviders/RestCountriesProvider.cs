@@ -32,5 +32,20 @@ namespace PhoneBook_webAPI.ExternalProviders
             }
             return capital;
         }
+
+        public async Task<string> GetCountryName(string code)
+        {
+            using var response = await _httpClient.GetAsync($"{code}");
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            jsonResponse = jsonResponse.Substring(1, jsonResponse.Length - 2);
+
+            var countryName = JsonSerializer.Deserialize<CountryNameInfo>(jsonResponse).CountryName;
+            if (countryName.Length == 0)
+            {
+                return null;
+            }
+            return countryName;
+        }
     }
 }

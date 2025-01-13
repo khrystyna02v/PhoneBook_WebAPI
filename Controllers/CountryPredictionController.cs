@@ -5,7 +5,7 @@ namespace PhoneBook_webAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CountryPredictionController(IManager manager, INationalizeProvider nationalizeProvider, IApiFirstProvider apiFirstProvider, ICountryPredictionManager countryPredictionManager) : Controller
+    public class CountryPredictionController(IManager manager, INationalizeProvider nationalizeProvider, ICountryPredictionManager countryPredictionManager) : Controller
     {
         private readonly IManager _manager = manager;
         private readonly ICountryPredictionManager _countryPredictionManager = countryPredictionManager;
