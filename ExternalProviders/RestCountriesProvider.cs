@@ -25,16 +25,12 @@ namespace PhoneBook_webAPI.ExternalProviders
             var jsonResponse = await response.Content.ReadAsStringAsync();
             jsonResponse = jsonResponse.Substring(1,jsonResponse.Length-2);
 
-            var country = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonResponse);
-            var capital = country["capital"].ToString();
+            var capital = JsonSerializer.Deserialize<CountryCapitalInfo>(jsonResponse).Capital[0];
             if (capital.Length == 0)
             {
                 return null;
             }
-            else
-            {
-                return capital;
-            }
+            return capital;
         }
     }
 }

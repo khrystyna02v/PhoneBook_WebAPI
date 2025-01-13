@@ -4,11 +4,12 @@ namespace PhoneBook_webAPI
 {
     public class CountryProbabilityViewModel
     {
-        [JsonPropertyName("country_id")]
-        public string CountryId { get; set; }
 
         [JsonPropertyName("probability")]
         public double Probability { get; set; }
+
+        [JsonPropertyName("country_id")]
+        public string CountryId { get; set; }
 
         [JsonPropertyName("country_name")]
         public string? CountryName { get; set; }
@@ -16,7 +17,7 @@ namespace PhoneBook_webAPI
         [JsonPropertyName("capital")]
         public string? Capital { get; set; }
 
-        public CountryProbabilityViewModel(CountryProbability countryProbability, string? countryName, string capital)
+        public CountryProbabilityViewModel(CountryProbability countryProbability, string? countryName, string? capital)
         {
             CountryId = countryProbability.CountryId;
             Probability = countryProbability.Probability;
