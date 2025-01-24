@@ -1,21 +1,30 @@
-﻿namespace PhoneBook_webAPI
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace PhoneBook_webAPI
 {
+    [Table(name: "Person", Schema = "PhoneBook")]
     public class Person
     {
+        public int PersonId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string? Email { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public Person() { }
-        public Person(string name, string surname, string phoneNumber, string? email = null)
+        public Person(int id, string name, string surname, string phoneNumber, DateTime? date, string? email = null)
         {
-            Name = name;
-            Surname = surname;
+            PersonId = id;
+            Name = name.Replace(" ", ""); ;
+            Surname = surname.Replace(" ", ""); ;
             PhoneNumber = phoneNumber;
             Email = email;
+            DateOfBirth = date;
         }
         public Person(PersonViewModel person)
         {
+            PersonId = 1;
             Name = person.Name;
             Surname = person.Surname;
             PhoneNumber = person.PhoneNumber;

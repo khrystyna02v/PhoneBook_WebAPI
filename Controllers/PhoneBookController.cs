@@ -1,18 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhoneBook_webAPI.Managers;
-
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using Microsoft.Data.SqlClient;
+using PhoneBook_webAPI.Data;
 namespace PhoneBook_webAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PhoneBookController(IManager manager, INationalizeProvider nationalizeProvider) : Controller
+    public class PhoneBookController(IManager manager, INationalizeProvider nationalizeProvider, DataContext context) : Controller
     {
+        private readonly DataContext _context = context;
         private readonly IManager _manager = manager;
+        //SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["data source=VeyKhrystyna-LNV;initial catalog=PhoneBook;trusted_connection=true"].ConnectionString);
 
         [HttpGet("list")]
         public async Task<IActionResult> List()
         {
-            return Ok(_manager.Read());
+            //return Ok(_manager.Read());
+            return Ok(_context.Person.ToList());
         }
 
         [HttpGet("part-of-list")]
@@ -123,7 +130,7 @@ namespace PhoneBook_webAPI.Controllers
             var surnames = new List<Person>();
             foreach (var person in phoneBook)
             {
-                if (person.Name.Length >= beginning.Length && person.Name.Substring(0, beginning.Length) == beginning)
+                if (person.Name.Length >= beginning.Length && person.Name[..beginning.Length] == beginning)
                 {
                     names.Add(person);
                 }

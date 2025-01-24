@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using PhoneBook_webAPI.ExternalProviders;
 
 namespace PhoneBook_webAPI
 {
