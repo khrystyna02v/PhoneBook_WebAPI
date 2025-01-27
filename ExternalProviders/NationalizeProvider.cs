@@ -1,4 +1,6 @@
 ﻿using System.Text.Json;
+using PhoneBook_webAPI.CountryPredictionClasses;
+using PhoneBook_webAPI.PersonClasses;
 
 namespace PhoneBook_webAPI.ExternalProviders
 {

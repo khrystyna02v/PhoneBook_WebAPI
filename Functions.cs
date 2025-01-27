@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using Azure;
 using Microsoft.AspNetCore.Http.HttpResults;
+using PhoneBook_webAPI.PersonClasses;
 
 
 namespace PhoneBook_webAPI
@@ -53,6 +54,12 @@ namespace PhoneBook_webAPI
         public static Person? Find(List<Person> phoneBook, string? name, string? surname)
         {
             return phoneBook.Find(person => person.Name == name && person.Surname == surname);
+        }
+
+        public static int? GetId(List<Person> phoneBook, string? name, string? surname)
+        {
+            var person = Find(phoneBook, name, surname);
+            return person?.PersonId;
         }
     }
 }

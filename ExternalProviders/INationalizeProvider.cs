@@ -1,4 +1,6 @@
-﻿namespace PhoneBook_webAPI
+﻿using PhoneBook_webAPI.CountryPredictionClasses;
+
+namespace PhoneBook_webAPI
 {
     public interface INationalizeProvider
     {

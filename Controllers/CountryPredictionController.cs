@@ -1,25 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PhoneBook_webAPI.Data;
 using PhoneBook_webAPI.Managers;
+using PhoneBook_webAPI.PersonClasses;
 
 namespace PhoneBook_webAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CountryPredictionController(IManager manager, INationalizeProvider nationalizeProvider, ICountryPredictionManager countryPredictionManager) : Controller
+    public class CountryPredictionController(IRepository<Person> manager, INationalizeProvider nationalizeProvider, ICountryPredictionManager countryPredictionManager, DataContext context) : Controller
     {
-        private readonly IManager _manager = manager;
+        private readonly DataContext _context = context;
+        private readonly IRepository<Person> _manager = manager;
         private readonly ICountryPredictionManager _countryPredictionManager = countryPredictionManager;
 
         [HttpGet("pedict-country")]
-        public async Task<IActionResult> Predict(int number)
+        public async Task<IActionResult> Predict(int id)
         {
-            var phoneBook = _manager.Read();
-            if (number > phoneBook.Count || number <= 0)
+            var phoneBook = _manager.GetAll();
+            string name = "";
+            foreach (var person in phoneBook)
             {
-                return BadRequest();
+                if (person.PersonId == id)
+                {
+                    name = person.Name.ToLower();
+                    break;
+                }
             }
-            var name = phoneBook[number - 1].Name.ToLower();
-
+            if (name == "")
+            {
+                return NotFound("Person not found");
+            }
             var countryProbabilitiesVM = _countryPredictionManager.GetProbabilities(name);
             return Ok(await countryProbabilitiesVM);
         }

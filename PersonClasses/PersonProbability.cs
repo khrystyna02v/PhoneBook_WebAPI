@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using PhoneBook_webAPI.CountryPredictionClasses;
 
-namespace PhoneBook_webAPI
+namespace PhoneBook_webAPI.PersonClasses
 {
     public class PersonProbability
     {
@@ -10,7 +11,7 @@ namespace PhoneBook_webAPI
         public string Name { get; set; }
         [JsonPropertyName("country")]
         public List<CountryProbability> Country { get; set; }
-        public PersonProbability() 
+        public PersonProbability()
         {
             Name = null;
             Country = new List<CountryProbability>();

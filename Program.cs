@@ -4,6 +4,7 @@ using PhoneBook_webAPI.Data;
 using PhoneBook_webAPI.ExternalProviders;
 using PhoneBook_webAPI.Managers;
 using PhoneBook_webAPI.Middleware;
+using PhoneBook_webAPI.PersonClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddSwaggerGen();
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 //});
 
-builder.Services.AddScoped<IManager, JsonManager>();
+builder.Services.AddScoped<IRepository<Person>, DbRepository<Person>>();
 builder.Services.AddScoped<INationalizeProvider, NationalizeProvider>();
 builder.Services.AddScoped<IRestCountriesProvider, RestCountriesProvider>();
 builder.Services.AddScoped<ICountryPredictionManager, CountryPredictionManager>();

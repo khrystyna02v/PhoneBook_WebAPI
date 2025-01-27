@@ -1,4 +1,6 @@
-﻿namespace PhoneBook_webAPI.Managers
+﻿using PhoneBook_webAPI.CountryPredictionClasses;
+
+namespace PhoneBook_webAPI.Managers
 {
     public interface ICountryPredictionManager
     {

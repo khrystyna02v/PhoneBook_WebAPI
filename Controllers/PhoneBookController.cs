@@ -5,33 +5,32 @@ using System.Data.SqlClient;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
 using PhoneBook_webAPI.Data;
+using PhoneBook_webAPI.PersonClasses;
 namespace PhoneBook_webAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PhoneBookController(IManager manager, INationalizeProvider nationalizeProvider, DataContext context) : Controller
+    public class PhoneBookController(IRepository<Person> manager, INationalizeProvider nationalizeProvider, DataContext context) : Controller
     {
         private readonly DataContext _context = context;
-        private readonly IManager _manager = manager;
-        //SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["data source=VeyKhrystyna-LNV;initial catalog=PhoneBook;trusted_connection=true"].ConnectionString);
+        private readonly IRepository<Person> _manager = manager;
 
         [HttpGet("list")]
         public async Task<IActionResult> List()
         {
-            //return Ok(_manager.Read());
-            return Ok(_context.Person.ToList());
+            return Ok(_manager.GetAll());
         }
 
         [HttpGet("part-of-list")]
         public async Task<IActionResult> List(int skip, int take)
         {
-            return Ok(_manager.Read().Skip(skip).Take(take));
+            return Ok(_manager.GetAll().Skip(skip).Take(take));
         }
 
         [HttpGet("details")]
         public async Task<IActionResult> Details(string name, string surname)
         {
-            var phoneBook = _manager.Read();
+            var phoneBook = _manager.GetAll();
             if (name == null || surname == null)
             {
                 return NotFound();
@@ -47,7 +46,7 @@ namespace PhoneBook_webAPI.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] PersonViewModel personVM)
         {
-            var phoneBook = _manager.Read();
+            var phoneBook = _manager.GetAll();
             var person = new Person(personVM);
             if (ModelState.IsValid && Functions.CheckPerson(person))
             {
@@ -72,7 +71,7 @@ namespace PhoneBook_webAPI.Controllers
             {
                 return NotFound("Null fields");
             }
-            var phoneBook = _manager.Read();
+            var phoneBook = _manager.GetAll();
             var foundPerson = Functions.Find(phoneBook, name, surname);
             if (foundPerson == null)
             {
@@ -81,17 +80,11 @@ namespace PhoneBook_webAPI.Controllers
             var person = new Person(personVM);
             if (ModelState.IsValid && Functions.CheckPerson(person))
             {
-                if ((person.Name != name || person.Surname != surname) && Functions.IsInBook(phoneBook, person.Name, person.Surname))
-                {
-                    return BadRequest("Person with such name and surname is already in the book");
-                }
                 if (!Functions.CheckEmail(person.Email))
                 {
                     person.Email = null;
                 }
-                phoneBook.Remove(foundPerson);
-                phoneBook.Add(person);
-                _manager.Rewrite(phoneBook);
+                _manager.Update(foundPerson, person);
                 return Ok("Person edited successfully");
             }
             return BadRequest();
@@ -100,19 +93,13 @@ namespace PhoneBook_webAPI.Controllers
         [HttpDelete("deleting")]
         public async Task<IActionResult> Delete(string name, string surname)
         {
-            var phoneBook = _manager.Read();
-            if (name == null || surname == null)
+            var phoneBook = _manager.GetAll();
+            var personToDelete = Functions.Find(phoneBook, name, surname);
+            if (personToDelete == null)
             {
-                return NotFound("Null fields");
+                return NotFound("Person not found");
             }
-
-            if (!Functions.IsInBook(phoneBook, name, surname))
-            {
-                return NotFound($"Not in book \"{name}\" \"{surname}\"");
-            }
-            var person = Functions.Find(phoneBook, name, surname);
-            phoneBook.Remove(person);
-            _manager.Rewrite(phoneBook);
+            _manager.Delete(personToDelete);
             return Ok("Deleted successfully");
         }
 
@@ -123,7 +110,7 @@ namespace PhoneBook_webAPI.Controllers
             {
                 return BadRequest();
             }
-            var phoneBook = _manager.Read();
+            var phoneBook = _manager.GetAll();
 
             Functions.SortBook(phoneBook);
             var names = new List<Person>();

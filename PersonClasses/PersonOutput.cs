@@ -1,4 +1,4 @@
-﻿namespace PhoneBook_webAPI
+﻿namespace PhoneBook_webAPI.PersonClasses
 {
     public static class PersonOutput
     {

@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-namespace PhoneBook_webAPI
+namespace PhoneBook_webAPI.CountryPredictionClasses
 {
     public class CountryCapitalInfo
     {

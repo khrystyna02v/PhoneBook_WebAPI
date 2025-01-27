@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PhoneBook_webAPI.PersonClasses;
 
 namespace PhoneBook_webAPI.Data
 {
