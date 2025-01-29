@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.Json.Serialization;
+using PhoneBook_webAPI.Other_entities_classes;
 
 namespace PhoneBook_webAPI.PersonClasses
 {
@@ -12,7 +13,9 @@ namespace PhoneBook_webAPI.PersonClasses
         public string PhoneNumber { get; set; }
         public string? Email { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        //public string? DateOfBirth { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Pet> Pets { get; set; }
+        public virtual Address? Home { get; set; }
         public Person() { }
         public Person(int id, string name, string surname, string phoneNumber, DateTime? date, string? email = null)
         {
@@ -22,6 +25,7 @@ namespace PhoneBook_webAPI.PersonClasses
             PhoneNumber = phoneNumber;
             Email = email;
             DateOfBirth = date;
+            Home = null;
         }
         public Person(string name, string surname, string phoneNumber, DateTime? date, string? email = null)
         {
@@ -30,6 +34,7 @@ namespace PhoneBook_webAPI.PersonClasses
             PhoneNumber = phoneNumber;
             Email = email;
             DateOfBirth = date;
+            Home = null;
         }
         public Person(PersonViewModel person)
         {
@@ -39,6 +44,7 @@ namespace PhoneBook_webAPI.PersonClasses
             PhoneNumber = person.PhoneNumber;
             Email = person.Email;
             DateOfBirth = person.DateOfBirth;
+            Home = null;
         }
     }
 }

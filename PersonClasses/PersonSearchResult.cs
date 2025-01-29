@@ -2,7 +2,7 @@
 {
     public class PersonSearchResult
     {
-        public List<PersonViewModel> Names { get; set; }
-        public List<PersonViewModel> Surnames { get; set; }
+        public List<Person>? Names { get; set; }
+        public List<Person>? Surnames { get; set; }
     }
 }

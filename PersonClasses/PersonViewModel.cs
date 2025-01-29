@@ -1,4 +1,6 @@
-﻿namespace PhoneBook_webAPI.PersonClasses
+﻿using PhoneBook_webAPI.Other_entities_classes;
+
+namespace PhoneBook_webAPI.PersonClasses
 {
     public class PersonViewModel
     {
@@ -9,14 +11,8 @@
 
         public DateTime? DateOfBirth { get; set; }
         public string? Email { get; set; }
-        public PersonViewModel()
-        {
-            Name = "none";
-            Surname = "none";
-            PhoneNumber = "0000000000";
-            Email = null;
-            DateOfBirth = null;
-        }
+
+        public PersonViewModel() { }
         public PersonViewModel(string name, string surname, string phoneNumber, DateTime? date, string? email = null)
         {
             Name = name;

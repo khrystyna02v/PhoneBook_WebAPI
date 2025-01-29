@@ -1,19 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PhoneBook_webAPI.Managers;
-using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
-using Microsoft.Data.SqlClient;
-using PhoneBook_webAPI.Data;
 using PhoneBook_webAPI.PersonClasses;
+using PhoneBook_webAPI.Repositories;
 namespace PhoneBook_webAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PhoneBookController(IRepository<Person> manager, INationalizeProvider nationalizeProvider, DataContext context) : Controller
+    public class PhoneBookController(IPersonRepository manager) : Controller
     {
-        private readonly DataContext _context = context;
-        private readonly IRepository<Person> _manager = manager;
+        private readonly IPersonRepository _manager = manager;
 
         [HttpGet("list")]
         public async Task<IActionResult> List()
@@ -24,33 +18,27 @@ namespace PhoneBook_webAPI.Controllers
         [HttpGet("part-of-list")]
         public async Task<IActionResult> List(int skip, int take)
         {
-            return Ok(_manager.GetAll().Skip(skip).Take(take));
+            return Ok(_manager.GetAll(skip, take));
         }
 
         [HttpGet("details")]
         public async Task<IActionResult> Details(string name, string surname)
         {
-            var phoneBook = _manager.GetAll();
-            if (name == null || surname == null)
+            var person = _manager.Get(x => x.Surname == surname && x.Name == name);
+            if (person == null)
             {
-                return NotFound();
+                return NotFound("Person not found");
             }
-
-            if (!Functions.IsInBook(phoneBook, name, surname))
-            {
-                return NotFound();
-            }
-            return Ok(Functions.Find(phoneBook, name, surname));
+            return Ok(person);
         }
 
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] PersonViewModel personVM)
         {
-            var phoneBook = _manager.GetAll();
             var person = new Person(personVM);
             if (ModelState.IsValid && Functions.CheckPerson(person))
             {
-                if (Functions.IsInBook(phoneBook, person.Name, person.Surname))
+                if (_manager.Get(x => x.Surname == person.Surname && x.Name == person.Name) != null)
                 {
                     return BadRequest("Person already in the book");
                 }
@@ -67,17 +55,12 @@ namespace PhoneBook_webAPI.Controllers
         [HttpPut("edit")]
         public async Task<IActionResult> Edit(string name, string surname, [FromBody] PersonViewModel personVM)
         {
-            if (name == null || surname == null)
-            {
-                return NotFound("Null fields");
-            }
-            var phoneBook = _manager.GetAll();
-            var foundPerson = Functions.Find(phoneBook, name, surname);
+            var person = new Person(personVM);
+            var foundPerson = _manager.Get(x => x.Surname == surname && x.Name == name);
             if (foundPerson == null)
             {
                 return NotFound("Person not found");
             }
-            var person = new Person(personVM);
             if (ModelState.IsValid && Functions.CheckPerson(person))
             {
                 if (!Functions.CheckEmail(person.Email))
@@ -93,8 +76,7 @@ namespace PhoneBook_webAPI.Controllers
         [HttpDelete("deleting")]
         public async Task<IActionResult> Delete(string name, string surname)
         {
-            var phoneBook = _manager.GetAll();
-            var personToDelete = Functions.Find(phoneBook, name, surname);
+            var personToDelete = _manager.Get(x => x.Surname == surname && x.Name == name);
             if (personToDelete == null)
             {
                 return NotFound("Person not found");
@@ -110,27 +92,10 @@ namespace PhoneBook_webAPI.Controllers
             {
                 return BadRequest();
             }
-            var phoneBook = _manager.GetAll();
-
-            Functions.SortBook(phoneBook);
-            var names = new List<Person>();
-            var surnames = new List<Person>();
-            foreach (var person in phoneBook)
-            {
-                if (person.Name.Length >= beginning.Length && person.Name[..beginning.Length] == beginning)
-                {
-                    names.Add(person);
-                }
-                if (person.Surname.Length >= beginning.Length && person.Surname.Substring(0, beginning.Length) == beginning)
-                {
-                    surnames.Add(person);
-                }
-            }
-
             var result = new PersonSearchResult
             {
-                Names = names.Select(x => new PersonViewModel(x)).ToList(),
-                Surnames = surnames.Select(x => new PersonViewModel(x)).ToList()
+                Names = _manager.GetAll(x => x.Name.Length >= beginning.Length && x.Name.Substring(0, beginning.Length) == beginning),
+                Surnames = _manager.GetAll(x => x.Surname.Length >= beginning.Length && x.Surname.Substring(0, beginning.Length) == beginning)
             };
 
             return Ok(result);
